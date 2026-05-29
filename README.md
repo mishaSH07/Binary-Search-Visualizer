@@ -1,6 +1,6 @@
 ---
-title: Treasure Islands Binary Search
-emoji: 🏴‍☠️
+title: Binary Search Visualizer
+emoji: 🔍
 colorFrom: blue
 colorTo: yellow
 sdk: gradio
@@ -10,9 +10,9 @@ pinned: false
 license: mit
 ---
 
-# Binary Search - Treasure Islands
+# Binary Search Visualizer
 
-An interactive Gradio website that visualizes the binary search algorithm as a pirate ship sailing between islands to find a hidden treasure chest.
+An interactive Gradio app that visualizes the binary search algorithm step by step. Each element of the array is shown as an island; a ship icon marks the current midpoint, and a treasure chest marks the found value.
 
 ## Name
 
@@ -20,131 +20,129 @@ An interactive Gradio website that visualizes the binary search algorithm as a p
 
 ## Algorithm Name
 
-**Binary Search (Visualized with Treasure Islands)**
+**Binary Search**
 
-## Demo video/gif/screenshot of test
+## Demo screenshots
 
-First View Loaded In:
+First view loaded in:
 ![loadingin](images/initialss.png)
 
-Mid Binary Search:
+Mid binary search:
 ![midsearch](images/midsearchss.png)
 
-Treasure Found:
-![treasurefound](images/treasurefoundss.png)
+Target found:
+![targetfound](images/treasurefoundss.png)
 
-Treasure Not Found: 
-![treasurenotfound](images/treasurenotfoundss.png)
-
-Sound Effects:
-![soundeffectshowcase](images/soundeffectsshowcase.png)
-I wanted to add sound effects in the background but autoplay requires a visible audio element so I pushed down the main content instead of fully hiding it.
+Target not found:
+![targetnotfound](images/treasurenotfoundss.png)
 
 ## Problem Breakdown & Computational Thinking
 
 ### Decomposition: What smaller steps form your chosen algorithm?
-Smaller steps which form the binary search site
 
 - Parse Input
-    - Read array as comma and space separated string
-    - Convert to 'List[int]' and sort by ascending
-    - Read target value as 'int'
+    - Read array as a comma/space-separated string
+    - Convert to `List[int]` and sort ascending
+    - Read target value as `int`
 
-- Initialize Search State 
-    - lo = 0 and hi is len(array) - 1
-    - mid = none, step = 0, finished = False and found_index = none
-    - Store everything in a state dictionary type setup that gradio passes between calls
+- Initialize Search State
+    - `lo = 0`, `hi = len(array) - 1`
+    - `mid = None`, `step = 0`, `finished = False`, `found_index = None`
+    - Store everything in a state dictionary that Gradio passes between calls
 
-- Single Search Step 
-    - If lo > hi then mark treasure not found and stop
-    - Compute mid
-    - Compare mid with target
-        - If equal mark found and stop
-        - If less move lo = mid + 1
-        - If more move hi = mid - 1
+- Single Search Step
+    - If `lo > hi`: mark not found and stop
+    - Compute `mid = (lo + hi) // 2`
+    - Compare `arr[mid]` with target:
+        - Equal → mark found and stop
+        - Less → move `lo = mid + 1`
+        - Greater → move `hi = mid - 1`
 
-- Visual & Audio Updates
-    - Be able to have audio done for every step such as when treasure is found or not found
-    - Return proper visuals and sound effects
-    - Connect buttons to core functions of binary search 
+- Visual Updates
+    - Return updated HTML visualization and a text explanation for each step
+    - Connect buttons to the core binary search functions
 
 ### Pattern Recognition: How does it repeatedly reach, compare, or swap values?
 
-- Recognizes array is sorted
-- Repeats the divide and conquer pattern:
-    - Always jump to the middle index between lo and hi
-    - Compare mid to target
-    - Discard the half the remaining search space
-- The same pattern runs for every step until:
-    - A match is found
-    - lo > hi then target does not exist within array
+- Recognizes that the array is sorted
+- Repeats the divide-and-conquer pattern:
+    - Jump to the middle index between `lo` and `hi`
+    - Compare `arr[mid]` to target
+    - Discard the half that cannot contain the target
+- The same pattern runs every step until:
+    - A match is found, or
+    - `lo > hi` (target does not exist in the array)
 
-- Visual Reptition
-    - Ship always moves to the middle island
+- Visual repetition:
+    - The ship icon always moves to the current midpoint island
     - Islands outside the current window are faded out
 
-### Abstraction: Which details of the process should be shown to the user and how to show it, and which details should be discarded (i.e., not shown)?
+### Abstraction: Which details are shown to the user and which are hidden?
 
-- Shown to the user
-    - Island row
-    - Pointers 
-    - Status/Explanations
-    - Audio
+- Shown to the user:
+    - Island row (array elements)
+    - L / H boundary pointers and the ship at mid
+    - Step-by-step status and explanation text
 
-- Hidden from the user
-    - Code for image display and audio autoplay in background
-    - UI internals of Gradio 
+- Hidden from the user:
+    - Image data-URI encoding
+    - Gradio UI internals
 
-### Algorithm Design: How will input → processing → output flow to and from the user? Including the use of the graphical user interface (GUI). Note you are free to choose the datatypes and structures of input (e.g., integer and list or string and linked list, etc.) as long as it is explicitly stated. Include this plan as a short section with a flowchart diagram in your README.
+### Algorithm Design: Input → Processing → Output
 
 ![Binary Search Flowchart](images/finalprojectflowchart.png)
 
 **Data types / structures**
 
 - Array (islands)
-    - GUI: text (Gradio Textbox with comma/space separated integers)
-    - Internal: 'List[int]' after parsing and sorting
+    - GUI: text (Gradio `Textbox`, comma/space-separated integers)
+    - Internal: `List[int]` after parsing and sorting
 
-- Target (treasure value)
-    - GUI: numeric (Gradio 'Number')
-    - Internal: 'int'
+- Target value
+    - GUI: numeric (Gradio `Number`)
+    - Internal: `int`
 
-- Search state (single dictionary)  
-  - `state = { "array": List[int], "target": int, "lo": int, "hi": int, "mid": Optional[int], "step": int, "finished": bool, "found_index": Optional[int] }`
+- Search state (single dictionary)
+  ```
+  state = {
+      "array":       List[int],
+      "target":      int,
+      "lo":          int,
+      "hi":          int,
+      "mid":         Optional[int],
+      "step":        int,
+      "finished":    bool,
+      "found_index": Optional[int],
+  }
+  ```
 
 - Generator inputs
-    - `range_start: int`, `range_end: int`, `mode: str ("Both" | "Even" | "Odd")`.  
-    - Output: a generated comma-separated string that populates the array textbox.
-
+    - `range_start: int`, `range_end: int`, `mode: str ("Both" | "Even" | "Odd")`
+    - Output: comma-separated string that populates the array textbox
 
 ## Steps to Run
 
-### Locally on VSCode
+### Locally in VS Code
 
-1. Clone the repo: https://github.com/mishaSH07/Binary-Search-Treasure-Islands/tree/main
-2. Open in VSCode
+1. Clone the repo
+2. Open the folder in VS Code
 3. Create a virtual environment
-3. Install dependencies: pip install -r requirements.txt
-4. Run the app: app.py
-5. Open the local Gradio URL shown in the terminal (typically http://127.0.0.1:7860/).
+4. Install dependencies: `pip install -r requirements.txt`
+5. Run the app: `python app.py`
+6. Open the local Gradio URL shown in the terminal (typically http://127.0.0.1:7860/)
 
 ### On Hugging Face
 
-1. Just visit the link: https://huggingface.co/spaces/MishaShubin/Binary-Search-Treasure-Islands
-
-## Hugging Face Link
-
-[Binary Search Treasure Islands]
-(https://huggingface.co/spaces/MishaShubin/Binary-Search-Treasure-Islands)
+Visit: https://huggingface.co/spaces/MishaShubin/Binary-Search-Visualizer
 
 ## Author & Acknowledgment
 
-Author: Misha Shubin
-Course: CISC 121 Final Project
-Algorithm Used: Binary Search
+Author: Misha Shubin  
+Course: CISC 121 Final Project  
+Algorithm: Binary Search
 
 AI Usage Disclosure:
-- ChatGPT Level 4 was used to for:
-    - Help design gradio interface for step by step visuals and audio cues
-    - Assist with the state dictionary 
-    - All generated code was reviewed, tested and integrated manually into the final project
+- ChatGPT (GPT-4) was used to:
+    - Help design the Gradio interface for step-by-step visualization
+    - Assist with the state dictionary structure
+    - All generated code was reviewed, tested, and integrated manually into the final project
