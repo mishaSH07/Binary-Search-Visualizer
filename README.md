@@ -25,16 +25,16 @@ An interactive Gradio app that visualizes the binary search algorithm step by st
 ## Demo screenshots
 
 First view loaded in:
-![loadingin](images/initialss.png)
+![loadingin](https://huggingface.co/spaces/MishaShubin/Binary-Search-Treasure-Islands/resolve/main/images/initialss.png)
 
 Mid binary search:
-![midsearch](images/midsearchss.png)
+![midsearch](https://huggingface.co/spaces/MishaShubin/Binary-Search-Treasure-Islands/resolve/main/images/midsearchss.png)
 
 Target found:
-![targetfound](images/treasurefoundss.png)
+![targetfound](https://huggingface.co/spaces/MishaShubin/Binary-Search-Treasure-Islands/resolve/main/images/treasurefoundss.png)
 
 Target not found:
-![targetnotfound](images/treasurenotfoundss.png)
+![targetnotfound](https://huggingface.co/spaces/MishaShubin/Binary-Search-Treasure-Islands/resolve/main/images/treasurenotfoundss.png)
 
 ## Problem Breakdown & Computational Thinking
 
@@ -90,7 +90,7 @@ Target not found:
 
 ### Algorithm Design: Input → Processing → Output
 
-![Binary Search Flowchart](images/finalprojectflowchart.png)
+![Binary Search Flowchart](https://huggingface.co/spaces/MishaShubin/Binary-Search-Treasure-Islands/resolve/main/images/finalprojectflowchart.png)
 
 **Data types / structures**
 
