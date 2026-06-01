@@ -74,32 +74,34 @@ def render_visual(state):
             + "</div>"
         ) if lh_labels else ""
 
-        # ship / treasure icons
-        icons = []
+        # Icons overlaid on top of the island image
+        overlay_icons = ""
         if i == mid:
-            icons.append(
-                f"<img src='{SHIP_IMG}' alt='ship' "
-                "style='width:40px;height:40px;object-fit:contain;margin-right:4px;'/>"
+            overlay_icons += (
+                f"<img src='{SHIP_IMG}' alt='ship' style='"
+                "position:absolute;top:50%;left:50%;"
+                "transform:translate(-50%,-65%);"
+                "width:44px;height:44px;object-fit:contain;pointer-events:none;'/>"
             )
         if i == found_index:
-            icons.append(
-                f"<img src='{TREASURE_IMG}' alt='found' "
-                "style='width:40px;height:40px;object-fit:contain;'/>"
+            overlay_icons += (
+                f"<img src='{TREASURE_IMG}' alt='found' style='"
+                "position:absolute;top:50%;left:50%;"
+                "transform:translate(-50%,-35%);"
+                "width:40px;height:40px;object-fit:contain;pointer-events:none;'/>"
             )
-        icon_row = (
-            "<div style='margin-bottom:4px;height:44px;'>"
-            + "".join(icons)
-            + "</div>"
-        )
 
-        island_img = (
+        island_wrapper = (
+            "<div style='position:relative;display:inline-block;width:80px;height:80px;'>"
             f"<img src='{ISLAND_IMG}' alt='island' "
-            f"style='width:80px;height:80px;object-fit:contain;opacity:{island_opacity};'/>"
+            f"style='width:80px;height:80px;object-fit:contain;opacity:{island_opacity};display:block;'/>"
+            f"{overlay_icons}"
+            "</div>"
         )
         index_label = f"<div style='margin-top:4px;font-size:14px;'>[{i}] = {val}</div>"
 
         islands_html.append(
-            f"<div style='{base_style}'>{label_row}{icon_row}{island_img}{index_label}</div>"
+            f"<div style='{base_style}'>{label_row}{island_wrapper}{index_label}</div>"
         )
 
     header = f"<h3>Step {step}</h3>"
